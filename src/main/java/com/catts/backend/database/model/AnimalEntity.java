@@ -1,27 +1,33 @@
 package com.catts.backend.database.model;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 
-
+@Entity
 @Getter
 @Setter
+@Table(name = "Animal")
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 public class AnimalEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private Integer idOng;
-    private String nome;
-    private Integer idade;
+    private String name;
+    private Integer age;
     private String porte;
-    private String descricao;
-    private Boolean statusAdocao;
-    private String localizacao;
+    private String description;
+    private Boolean AdoptionStatus;
+
+    @ManyToOne
+    @JoinColumn(name = "CNPJ_id")
+    private OngEntity ong;
+
+    @OneToOne(mappedBy = "animal")
+    private PhotoAnimalEntity image;
 
 
-    public AnimalEntity(int i, String malu, int i1, String pequeno, String ee, boolean b, String sp) {
-    }
+
 }
