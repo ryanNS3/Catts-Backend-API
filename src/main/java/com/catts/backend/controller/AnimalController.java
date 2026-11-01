@@ -38,13 +38,6 @@ public class AnimalController {
 
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public AnimalDTO createAnimal(AnimalDTO animal) {
-
-    }
-
-
 
 
 
