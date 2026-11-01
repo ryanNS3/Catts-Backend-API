@@ -29,5 +29,6 @@ public class AnimalEntity {
     private PhotoAnimalEntity image;
 
 
-
+    public AnimalEntity(int i, String malu, int i1, String pequeno, String ee, boolean b) {
+    }
 }
