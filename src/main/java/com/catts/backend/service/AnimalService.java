@@ -17,7 +17,7 @@ public class AnimalService {
     }
 
     public AnimalEntity createAnimal(AnimalDTO animal){
-        AnimalEntity newAnimal = new AnimalEntity(1, "malu", 15, "pequeno", "ee", false, "sp");
+        AnimalEntity newAnimal = new AnimalEntity( 1, "malu", 15, "pequeno", "ee", false);
         animais.add(newAnimal);
         return newAnimal;
     }
