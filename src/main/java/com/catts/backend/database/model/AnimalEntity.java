@@ -1,7 +1,7 @@
 package com.catts.backend.database.model;
+
 import jakarta.persistence.*;
 import lombok.*;
-
 
 @Entity
 @Getter
@@ -11,24 +11,38 @@ import lombok.*;
 @NoArgsConstructor
 @ToString
 public class AnimalEntity {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
+
+    @Column(name = "idOng")
     private Integer idOng;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "age")
     private Integer age;
-    private String porte;
+
+    @Column(name = "weight")
+    private Integer weight;
+
+    @Column(name = "description")
     private String description;
-    private Boolean AdoptionStatus;
+
+    @Column(name = "adoptionStatus")
+    private Boolean adoptionStatus;
+
+    @Column(name = "castrado")
+    private Boolean castrado;
+
+    @Column(name = "vaccine")
+    private String vaccine;
 
     @ManyToOne
-    @JoinColumn(name = "CNPJ_id")
+    @JoinColumn(name = "CNPJ_id", referencedColumnName = "CNPJ")
     private OngEntity ong;
 
     @OneToOne(mappedBy = "animal")
     private PhotoAnimalEntity image;
-
-
-    public AnimalEntity(int i, String malu, int i1, String pequeno, String ee, boolean b) {
-    }
 }
