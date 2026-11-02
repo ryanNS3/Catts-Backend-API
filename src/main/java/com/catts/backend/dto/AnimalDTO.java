@@ -1,5 +1,7 @@
 package com.catts.backend.dto;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 
@@ -10,12 +12,13 @@ import lombok.*;
 @ToString
 public class AnimalDTO {
     private Integer idOng;
-    private String nome;
-    private Integer idade;
-    private String porte;
-    private String descricao;
-    private Boolean statusAdocao;
-    private String localizacao;
+    private String name;
+    private Integer age;
+    private Integer weight;
+    private String description;
+    private Boolean adoptionStatus;
+    private Boolean castrado;
+    private String[] vaccine;
 
 
 
