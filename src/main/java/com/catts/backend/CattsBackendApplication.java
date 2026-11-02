@@ -8,6 +8,7 @@ public class CattsBackendApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CattsBackendApplication.class, args);
+
     }
 
 }
