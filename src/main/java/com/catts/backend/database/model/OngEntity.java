@@ -1,9 +1,11 @@
 package com.catts.backend.database.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -26,8 +28,10 @@ public class OngEntity {
     @JoinColumn(name = "address")
     private AddressEntity address;
 
+    // Na OngEntity, em cima da lista de animais:
+    @JsonIgnore
     @OneToMany(mappedBy = "ong")
-    private Set<AnimalEntity> animal;
+    private List<AnimalEntity> animal;
 
 
 }
