@@ -1,5 +1,6 @@
 package com.catts.backend.database.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -41,6 +42,7 @@ public class AnimalEntity {
 
     @ManyToOne
     @JoinColumn(name = "CNPJ_id", referencedColumnName = "CNPJ")
+    @JsonBackReference // Ignora a serialização da ONG a partir do animal para cortar o loop
     private OngEntity ong;
 
     @OneToOne(mappedBy = "animal")
