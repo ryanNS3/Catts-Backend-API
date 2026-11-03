@@ -2,6 +2,7 @@ package com.catts.backend.controller;
 
 import com.catts.backend.database.model.AnimalEntity;
 import com.catts.backend.dto.AnimalDTO;
+import com.catts.backend.dto.AnimalResponseDTO;
 import com.catts.backend.service.AnimalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/animal")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200") // <-- Libera o acesso para o Angular
 public class AnimalController {
     private final AnimalService animalService;
 
     // retorna todos os animais
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<AnimalEntity> allAnimal(){
+    public List<AnimalResponseDTO> allAnimal(){
         return animalService.findALL();
     }
 
