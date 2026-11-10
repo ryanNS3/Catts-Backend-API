@@ -48,6 +48,9 @@ public class AzureBlobService {
 
         String contentType = arquivo.getContentType();
 
+
+        // Trocar isso para status, evitar quebrar o back
+
         if (contentType == null ||
                 !contentType.matches("image/(jpeg|png|webp)")) {
             throw new IllegalArgumentException(
