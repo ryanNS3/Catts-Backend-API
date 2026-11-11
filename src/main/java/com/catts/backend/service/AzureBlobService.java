@@ -81,4 +81,8 @@ public class AzureBlobService {
 
         return nomeArquivo;
     }
+    //Deleta a minha imagem caso não seja alocada no banco por conta de um erro
+    public void deleteBlob(String blobName) {
+        containerClient.getBlobClient(blobName).deleteIfExists();
+    }
 }
