@@ -11,6 +11,8 @@ public class AnimalResponseDTO {
     private Integer idOng;
     private String name;
     private Integer age;
+    private String porte;
+    private String localizacao;
     private Integer weight;
     private String description;
     private Boolean adoptionStatus;

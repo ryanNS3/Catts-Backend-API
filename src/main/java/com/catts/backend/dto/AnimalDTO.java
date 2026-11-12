@@ -19,6 +19,9 @@ public class AnimalDTO {
     private Boolean adoptionStatus;
     private Boolean castrado;
     private String[] vaccine;
+    private String cnpjOng;       // CNPJ da ONG dona do animal (mesma formatacao do banco)
+    private String porte;
+    private String localizacao;
 
 
 

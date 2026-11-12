@@ -31,6 +31,12 @@ public class AnimalEntity {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "porte")
+    private String porte;
+
+    @Column(name = "localizacao")
+    private String localizacao;
+
     @Column(name = "adoptionStatus")
     private Boolean adoptionStatus;
 
