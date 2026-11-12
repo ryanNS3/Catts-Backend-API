@@ -81,4 +81,9 @@ public class AzureBlobService {
 
         return nomeArquivo;
     }
+
+    // Apaga a foto do Blob (usado quando o banco falha depois do upload, para nao deixar foto orfa)
+    public void deleteBlob(String blobName) {
+        containerClient.getBlobClient(blobName).deleteIfExists();
+    }
 }

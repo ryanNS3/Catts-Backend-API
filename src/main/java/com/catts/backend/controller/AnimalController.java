@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.io.IOException;
+import org.springframework.http.MediaType;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/v1/animal")
@@ -23,6 +26,16 @@ public class AnimalController {
     @ResponseStatus(HttpStatus.OK)
     public List<AnimalResponseDTO> allAnimal(){
         return animalService.findALL();
+    }
+
+    // cadastra um animal com a foto (formulario multipart)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public AnimalResponseDTO createAnimal(
+            @ModelAttribute AnimalDTO animal,               // campos de texto -> AnimalDTO
+            @RequestParam("arquivo") MultipartFile arquivo  // a foto
+    ) throws IOException {
+        return animalService.createAnimal(animal, arquivo);
     }
 
     // retorna todos os animais para adoção
