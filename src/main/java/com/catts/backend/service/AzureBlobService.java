@@ -8,6 +8,8 @@ import com.azure.storage.blob.models.BlobHttpHeaders;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import java.io.ByteArrayInputStream;
+
 
 import java.io.IOException;
 import java.util.UUID;
@@ -82,8 +84,25 @@ public class AzureBlobService {
         return nomeArquivo;
     }
 
-    // Apaga a foto do Blob (usado quando o banco falha depois do upload, para nao deixar foto orfa)
+    // Apaga a foto do Blob (usado quando o banco falha depois do upload, para nao deixar foto sozinha la)
     public void deleteBlob(String blobName) {
         containerClient.getBlobClient(blobName).deleteIfExists();
+    }
+
+    // verificador de arquivo Blob
+    public boolean blobExiste(String blobName) {
+        return containerClient.getBlobClient(blobName).exists();
+    }
+
+    // pega o arquivo do Blob convertendo p bytes devolve os bytes
+    public byte[] baixarBlob(String blobName) {
+        return containerClient.getBlobClient(blobName).downloadContent().toBytes();
+    }
+
+    // grava bytes no Blob (sobrescreve se ja existir, ex.: editar a mesma foto de novo)
+    public void enviarBytes(String blobName, byte[] dados, String contentType) {
+        BlobClient blobClient = containerClient.getBlobClient(blobName);
+        blobClient.upload(new ByteArrayInputStream(dados), dados.length, true);
+        blobClient.setHttpHeaders(new BlobHttpHeaders().setContentType(contentType));
     }
 }
