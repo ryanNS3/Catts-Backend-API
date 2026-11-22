@@ -1,16 +1,17 @@
 package com.catts.backend.database.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@Table(name = "Animal")
 @Getter
 @Setter
-@Table(name = "Animal")
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = {"ong", "image"})
 public class AnimalEntity {
 
     @Id
@@ -48,9 +49,10 @@ public class AnimalEntity {
 
     @ManyToOne
     @JoinColumn(name = "CNPJ_id", referencedColumnName = "CNPJ")
-    @JsonBackReference // Ignora a serialização da ONG a partir do animal para cortar o loop
+    @JsonBackReference
     private OngEntity ong;
 
     @OneToOne(mappedBy = "animal")
+    @JsonManagedReference
     private PhotoAnimalEntity image;
 }

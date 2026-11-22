@@ -1,13 +1,10 @@
 package com.catts.backend.database.model;
 
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@Table(name = "address_entity")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,12 +14,11 @@ public class AddressEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
-    String street;
-    Integer number;
-    String city;
-    String state;
-    String cep;
+    private Integer id;
 
-
+    private String street;
+    private Integer number;
+    private String city;
+    private String state;
+    private String cep;
 }
