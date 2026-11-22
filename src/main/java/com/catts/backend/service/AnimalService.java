@@ -9,7 +9,6 @@ import com.catts.backend.repository.AnimalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import com.catts.backend.database.model.OngEntity;
@@ -39,11 +38,10 @@ public class AnimalService {
             OngResponseDTO ongDto = null;
             if (animal.getOng() != null) {
                 ongDto = OngResponseDTO.builder()
-                        .cnpj(animal.getOng().getCNPJ())
+                        .cnpj(animal.getOng().getCnpj())
                         .nomeInstitucional(animal.getOng().getNomeInstitucional())
                         .email(animal.getOng().getEmail())
-                        .telefone(animal.getOng().getTelefone())
-                        .descricao(animal.getOng().getDescricao())
+                        .telefone(animal.getOng().getContato())
                         .build();
             }
 
@@ -144,11 +142,10 @@ public class AnimalService {
         OngResponseDTO ongDto = null;
         if (animal.getOng() != null) {
             ongDto = OngResponseDTO.builder()
-                    .cnpj(animal.getOng().getCNPJ())
+                    .cnpj(animal.getOng().getCnpj())
                     .nomeInstitucional(animal.getOng().getNomeInstitucional())
                     .email(animal.getOng().getEmail())
-                    .telefone(animal.getOng().getTelefone())
-                    .descricao(animal.getOng().getDescricao())
+                    .telefone(animal.getOng().getContato())
                     .build();
         }
 
@@ -167,7 +164,6 @@ public class AnimalService {
                 .porte(animal.getPorte())
                 .localizacao(animal.getLocalizacao())
                 .weight(animal.getWeight())
-                .description(animal.getDescription())
                 .adoptionStatus(animal.getAdoptionStatus())
                 .castrado(animal.getCastrado())
                 .vaccine(animal.getVaccine())
