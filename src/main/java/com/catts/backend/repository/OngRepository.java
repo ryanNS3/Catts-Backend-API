@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface OngRepository extends JpaRepository<OngEntity, String> {
-    Optional<AdopterEntity> findByEmail(String email);
+    Optional<OngEntity> findByEmail(String email);
 
 }
