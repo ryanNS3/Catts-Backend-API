@@ -7,6 +7,7 @@ import lombok.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "adopter_entity")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,25 +19,37 @@ public class AdopterEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nome; // Importante ter para guardar o nome vindo do Google
-    private String email; // Vem do google tbm
+    private String nome;
+    private String email;
     private String contato;
     private String cpf;
+
+    @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_residencia")
     private TipoResidenciaEnum tipoResidencia;
 
+    @Column(name = "possui_tela_protecao")
     private Boolean possuiTelaProtecao;
+
+    @Column(name = "imovel_alugado")
     private Boolean imovelAlugado;
+
     private Float salario;
+
+    @Column(name = "quantidade_pet")
     private String quantidadePet;
+
+    @Column(name = "quantidade_horas_trabalho")
     private Integer quantidadeHorasTrabalho;
+
+    @Column(name = "quantidade_pessoas_casa")
     private Integer quantidadePessoasCasa;
+
     private String descricao;
 
-    // Cria a chave estrangeira 'address_id' na tabela de adotantes
-    // CascadeType.ALL salva/atualiza o endereço automaticamente junto com o adotante
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private AddressEntity address;
