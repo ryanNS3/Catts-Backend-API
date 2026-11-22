@@ -35,6 +35,12 @@ public class AdoptionRequestEntity {
     @Column(nullable = false)
     private StatusAdocaoEnum status = StatusAdocaoEnum.PENDENTE;
 
+    @Column(name = "mensagem_adotante", length = 1000)
+    private String mensagemAdotante;
+
+    @Column(name = "resposta_ong", length = 1000)
+    private String respostaOng;
+
     @Column(name = "data_solicitacao", nullable = false)
     private LocalDateTime dataSolicitacao = LocalDateTime.now();
 }
