@@ -1,19 +1,23 @@
 package com.catts.backend.controller;
 
-import com.catts.backend.database.model.AnimalEntity;
+import com.catts.backend.database.model.OngEntity;
 import com.catts.backend.dto.AnimalDTO;
 import com.catts.backend.dto.AnimalResponseDTO;
+import com.catts.backend.dto.AnimalUpdateDTO;
+import com.catts.backend.repository.OngRepository;
 import com.catts.backend.service.AnimalService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.io.IOException;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/animal")
@@ -60,7 +64,33 @@ public class AnimalController {
         return ResponseEntity.ok(animalService.findAnimalByOngId(ongId));
     }
 
+    // 4. Atualizar animal (apenas ONG dona do animal)
+    @PutMapping("/{id}")
+    public ResponseEntity<AnimalResponseDTO> atualizarAnimal(
+            @PathVariable("id") String id,
+            @RequestBody AnimalUpdateDTO dto
+    ) {
+        OngEntity ongLogada = buscarOngLogada();
+        AnimalResponseDTO atualizado = animalService.atualizarAnimal(id, dto, ongLogada);
+        return ResponseEntity.ok(atualizado);
+    }
 
+    // 5. Deletar animal (apenas ONG dona do animal)
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletarAnimal(@PathVariable("id") String id) {
+        OngEntity ongLogada = buscarOngLogada();
+        animalService.deletarAnimal(id, ongLogada);
+    }
+
+    private OngEntity buscarOngLogada() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated() || auth.getPrincipal() == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuário não autenticado.");
+        }
+
+        return animalService.buscarOngPorEmail(auth.getName());
+    }
 
 
 }
