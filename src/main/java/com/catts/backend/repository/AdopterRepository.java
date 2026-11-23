@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface AdopterRepository extends JpaRepository<AdopterEntity, Long> {
     Optional<AdopterEntity> findByEmail(String email);
+
 }
