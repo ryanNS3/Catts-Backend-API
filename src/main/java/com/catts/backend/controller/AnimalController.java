@@ -89,8 +89,22 @@ public class AnimalController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuário não autenticado.");
         }
 
+        Object principal = auth.getPrincipal();
+        if (principal instanceof OngEntity ong) {
+            return ong;
+        }
+
         return animalService.buscarOngPorEmail(auth.getName());
     }
+
+//    private OngEntity buscarOngLogada() {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        if (auth == null || !auth.isAuthenticated() || auth.getPrincipal() == null) {
+//            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuário não autenticado.");
+//        }
+//
+//        return animalService.buscarOngPorEmail(auth.getName());
+//    }
 
 
 }
