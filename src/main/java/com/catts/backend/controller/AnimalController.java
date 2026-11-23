@@ -7,6 +7,7 @@ import com.catts.backend.service.AnimalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,6 +52,12 @@ public class AnimalController {
     public String getAnimalById(@PathVariable("id") String id){
         return "Animal : " + id;
 
+    }
+
+    // retorna os animais de acordo com id da ong
+    @GetMapping("/ong/{ongId}")
+    public ResponseEntity<List<AnimalResponseDTO>> listarPorOng(@PathVariable Long ongId) {
+        return ResponseEntity.ok(animalService.findAnimalByOngId(ongId));
     }
 
 
