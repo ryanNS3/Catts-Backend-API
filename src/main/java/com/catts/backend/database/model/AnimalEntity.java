@@ -52,7 +52,7 @@ public class AnimalEntity {
     @JsonBackReference
     private OngEntity ong;
 
-    @OneToOne(mappedBy = "animal")
+    @OneToOne(mappedBy = "animal", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private PhotoAnimalEntity image;
 }
