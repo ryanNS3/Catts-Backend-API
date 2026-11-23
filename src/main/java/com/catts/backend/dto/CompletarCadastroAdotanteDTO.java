@@ -1,7 +1,6 @@
 package com.catts.backend.dto;
 
 import com.catts.backend.enums.TipoResidenciaEnum;
-
 import java.time.LocalDate;
 
 public record CompletarCadastroAdotanteDTO(
@@ -9,14 +8,15 @@ public record CompletarCadastroAdotanteDTO(
         String contato,
         String cpf,
         LocalDate dataNascimento,
-        TipoResidenciaEnum tipoResidencia, // O Spring aceita "CONDOMINIO" ou "INDEPENDENTE" direto do JSON
+        TipoResidenciaEnum tipoResidencia,
         Boolean possuiTelaProtecao,
         Boolean imovelAlugado,
         Float salario,
         String quantidadePet,
-        Integer quantidadeHorasTrabalho,
+        String quantidadeHorasTrabalho, // Alterado de Integer para String para bater com o Front
         Integer quantidadePessoasCasa,
         String descricao,
-        AddressDTO address // Objeto aninhado com os dados do endereço
+        Boolean aceitaFotos,
+        AddressDTO address
 ) {
 }
