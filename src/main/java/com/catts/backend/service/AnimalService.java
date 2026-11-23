@@ -263,6 +263,17 @@ public class AnimalService {
         }
     }
 
+    public OngEntity buscarOngPorEmail(String email) {
+        if (email == null || email.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuário não autenticado.");
+        }
+
+        return ongRepository.findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.FORBIDDEN, "Apenas ONGs cadastradas podem gerenciar animais."
+                ));
+    }
+
 
 
 }
