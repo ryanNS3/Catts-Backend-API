@@ -40,6 +40,8 @@ public class SpringConfig {
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.POST, "/api/auth/google").permitAll()
                         .requestMatchers(HttpMethod.GET, "/v1/animal").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/animais/**").hasRole("ONG")
+                        .requestMatchers(HttpMethod.DELETE, "/api/animais/**").hasRole("ONG")
                         .requestMatchers(HttpMethod.POST, "/api/auth/completar-cadastro/adotante").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/completar-cadastro/ong").permitAll()
                         .requestMatchers("/v1/public/**").permitAll()
