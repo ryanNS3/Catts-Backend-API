@@ -30,6 +30,7 @@ public class GoogleAuthService {
                     new NetHttpTransport(),
                     GsonFactory.getDefaultInstance())
                     .setAudience(Collections.singletonList(googleClientId))
+                    .setAcceptableTimeSkewSeconds(300) // tolera diferença de relógio entre Azure e Google
                     .build();
 
             // =========================================================================
