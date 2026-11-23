@@ -1,6 +1,7 @@
 package com.catts.backend.controller;
 
-import com.auth0.jwt.interfaces.DecodedJWT;
+import com.catts.backend.database.model.AdopterEntity;
+import com.catts.backend.database.model.OngEntity;
 import com.catts.backend.dto.CriarSolicitacaoAdocaoDTO;
 import com.catts.backend.dto.ResponderSolicitacaoAdocaoDTO;
 import com.catts.backend.dto.SolicitacaoAdocaoResponseDTO;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -25,13 +27,16 @@ public class AdoptionRequestController {
     // 1. Adotante cria requisição de adoção
     @PostMapping
     public ResponseEntity<SolicitacaoAdocaoResponseDTO> criarSolicitacao(
-            @AuthenticationPrincipal DecodedJWT jwt,
+            @AuthenticationPrincipal Object principal,
             @RequestBody CriarSolicitacaoAdocaoDTO dto) {
 
-        Long adopterId = jwt.getClaim("id").asLong();
-        String tipoUsuario = jwt.getClaim("tipo").asString();
+        if (!(principal instanceof AdopterEntity adotante)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Apenas adotantes podem solicitar adoção.");
+        }
 
-        SolicitacaoAdocaoResponseDTO response = adoptionRequestService.criarSolicitacao(adopterId, tipoUsuario, dto);
+        SolicitacaoAdocaoResponseDTO response = adoptionRequestService.criarSolicitacao(
+                adotante.getId(), "ADOTANTE", dto
+        );
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -39,30 +44,39 @@ public class AdoptionRequestController {
     @PatchMapping("/{id}/responder")
     public ResponseEntity<SolicitacaoAdocaoResponseDTO> responderSolicitacao(
             @PathVariable Long id,
-            @AuthenticationPrincipal DecodedJWT jwt,
+            @AuthenticationPrincipal Object principal,
             @RequestBody ResponderSolicitacaoAdocaoDTO dto) {
 
-        Long ongId = jwt.getClaim("id").asLong();
-        String tipoUsuario = jwt.getClaim("tipo").asString();
+        if (!(principal instanceof OngEntity ong)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Apenas ONGs podem aprovar ou reprovar solicitações.");
+        }
 
-        SolicitacaoAdocaoResponseDTO response = adoptionRequestService.responderSolicitacao(id, ongId, tipoUsuario, dto);
+        SolicitacaoAdocaoResponseDTO response = adoptionRequestService.responderSolicitacao(
+                id, ong.getId(), "ONG", dto
+        );
         return ResponseEntity.ok(response);
     }
 
     // Rotas auxiliares para consultar solicitações
     @GetMapping("/minhas")
     public ResponseEntity<List<SolicitacaoAdocaoResponseDTO>> minhasSolicitacoes(
-            @AuthenticationPrincipal DecodedJWT jwt) {
+            @AuthenticationPrincipal Object principal) {
 
-        Long adopterId = jwt.getClaim("id").asLong();
-        return ResponseEntity.ok(adoptionRequestService.listarPorAdotante(adopterId));
+        if (!(principal instanceof AdopterEntity adotante)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Acesso permitido apenas para adotantes.");
+        }
+
+        return ResponseEntity.ok(adoptionRequestService.listarPorAdotante(adotante.getId()));
     }
 
     @GetMapping("/ong")
     public ResponseEntity<List<SolicitacaoAdocaoResponseDTO>> solicitacoesDaOng(
-            @AuthenticationPrincipal DecodedJWT jwt) {
+            @AuthenticationPrincipal Object principal) {
 
-        Long ongId = jwt.getClaim("id").asLong();
-        return ResponseEntity.ok(adoptionRequestService.listarPorOng(ongId));
+        if (!(principal instanceof OngEntity ong)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Acesso permitido apenas para ONGs.");
+        }
+
+        return ResponseEntity.ok(adoptionRequestService.listarPorOng(ong.getId()));
     }
 }
