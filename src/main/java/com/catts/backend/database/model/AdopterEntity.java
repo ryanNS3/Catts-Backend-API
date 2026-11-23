@@ -43,7 +43,7 @@ public class AdopterEntity {
     private String quantidadePet;
 
     @Column(name = "quantidade_horas_trabalho")
-    private Integer quantidadeHorasTrabalho;
+    private String quantidadeHorasTrabalho;
 
     @Column(name = "quantidade_pessoas_casa")
     private Integer quantidadePessoasCasa;
